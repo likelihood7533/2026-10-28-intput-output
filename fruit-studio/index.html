@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>皮可工作室｜外包工作管理</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="app">
+
+  <!-- ===== sidebar ===== -->
+  <div class="sidebar">
+    <div class="brand">
+      <span class="logo" id="logo" aria-hidden="true"></span>
+      <div>皮可工作室<small>外包工作管理</small></div>
+    </div>
+
+    <nav class="nav">
+      <button data-view="dashboard" class="active">🏠 總覽</button>
+      <button data-view="form">✏️ 新增工作</button>
+      <button data-view="list">📋 工作清單 <span class="badge" id="navCount">0</span></button>
+      <button data-view="calendar">📅 行事曆</button>
+    </nav>
+
+    <div class="legend">
+      <h4>依類別查看</h4>
+      <button data-filter="2d"><i class="swatch" style="background:#E8453C"></i>2D 美術委託</button>
+      <button data-filter="3d"><i class="swatch" style="background:#F28C28"></i>3D 美術工作</button>
+      <button data-filter="live2d"><i class="swatch" style="background:#F5B800"></i>Live2D 建模</button>
+      <button data-filter="v"><i class="swatch" style="background:#7CB342"></i>V 皮繪製</button>
+    </div>
+  </div>
+
+  <!-- ===== main ===== -->
+  <main class="main">
+    <header class="topbar">
+      <div class="crumb">
+        <span id="crumbSub"></span>
+        <h1 id="crumbPage">總覽</h1>
+      </div>
+      <button class="btn btn-primary" data-view="form">＋ 新增工作</button>
+    </header>
+
+    <!-- ---------- dashboard ---------- -->
+    <section id="view-dashboard" class="view">
+      <div class="stats">
+        <div class="card stat" style="--c:var(--straw)">
+          <div class="top"><span>總工作數</span><span class="fruit" aria-hidden="true">🐈‍⬛</span></div>
+          <div class="num" id="st_total">0</div>
+          <div class="sub" id="st_total_sub"></div>
+        </div>
+        <div class="card stat" style="--c:var(--orange)">
+          <div class="top"><span>已完成</span><span class="fruit" aria-hidden="true">🦊</span></div>
+          <div class="num" id="st_done">0</div>
+          <div class="sub" id="st_done_sub"></div>
+        </div>
+        <div class="card stat" style="--c:#C98A00">
+          <div class="top"><span>待收款</span><span class="fruit" aria-hidden="true">🐥</span></div>
+          <div class="num money" id="st_balance">NT$ 0</div>
+          <div class="sub" id="st_balance_sub"></div>
+        </div>
+        <div class="card stat" style="--c:var(--kiwi)">
+          <div class="top"><span>平均時薪</span><span class="fruit" aria-hidden="true">🐸</span></div>
+          <div class="num money" id="st_rate">—</div>
+          <div class="sub" id="st_rate_sub"></div>
+        </div>
+      </div>
+
+      <div class="dash">
+        <div class="card">
+          <h3>最近工作 <button class="btn-link" data-view="list">查看全部 →</button></h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>工作</th><th>類別</th><th>交件</th><th>狀態</th><th class="r">總報價</th></tr></thead>
+              <tbody id="recentBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="card">
+            <h3>類別工作量</h3>
+            <div id="catBars"></div>
+          </div>
+          <div class="card">
+            <h3>進度分布</h3>
+            <div class="donut-wrap">
+              <div class="donut" id="donut">
+                <div class="donut-hole"><b id="donutPct">0%</b><small>已完成</small></div>
+              </div>
+              <ul class="status-list" id="donutLegend"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- form + quote ---------- -->
+    <section id="view-form" class="view hidden">
+      <div class="form-layout">
+        <form id="workForm" class="card" novalidate>
+          <div class="form-head">
+            <h3 id="formTitle">新增工作</h3>
+            <span class="hint">欄位會依類別自動調整</span>
+          </div>
+
+          <div class="section-title">基本資料</div>
+          <div class="form-grid">
+            <div class="field">
+              <label for="f_category">工作類別</label>
+              <select id="f_category"></select>
+            </div>
+            <div class="field">
+              <label for="f_sub">服務項目</label>
+              <select id="f_sub"></select>
+            </div>
+            <div class="field full">
+              <label for="f_name">工作名稱 *</label>
+              <input id="f_name" maxlength="60" placeholder="例如：Bloom 春季封面插圖" />
+            </div>
+            <div class="field">
+              <label for="f_client">客戶代號</label>
+              <input id="f_client" maxlength="20" placeholder="選填" />
+            </div>
+            <div class="field">
+              <label for="f_status">工作狀態</label>
+              <select id="f_status"></select>
+            </div>
+            <div class="field">
+              <label for="f_due">交件日期</label>
+              <div class="date-wrap"><input type="date" id="f_due" /><button type="button" class="cal-btn" id="btnCal" aria-label="開啟月曆">📅</button></div>
+            </div>
+          </div>
+
+          <div class="section-title" id="detailTitle">類別專用欄位</div>
+          <div class="form-grid" id="detailFields"></div>
+
+          <div class="section-title">報價</div>
+          <div class="form-grid">
+            <div class="field">
+              <label for="f_price">單價（NT$）</label>
+              <input type="number" min="0" id="f_price" placeholder="0" />
+            </div>
+            <div class="field">
+              <label for="f_qty">數量</label>
+              <input type="number" min="1" id="f_qty" />
+            </div>
+            <div class="field">
+              <label for="f_extra">額外費用（NT$）</label>
+              <input type="number" min="0" id="f_extra" />
+            </div>
+            <div class="field">
+              <label for="f_discount">折扣（NT$）</label>
+              <input type="number" min="0" id="f_discount" />
+            </div>
+            <div class="field">
+              <label for="f_deposit">訂金比例（%）</label>
+              <input type="number" min="0" max="100" id="f_deposit" />
+            </div>
+            <div class="field">
+              <label for="f_paid">已收款金額（NT$）</label>
+              <input type="number" min="0" id="f_paid" />
+            </div>
+          </div>
+
+          <div class="section-title">工時</div>
+          <div class="form-grid">
+            <div class="field">
+              <label for="f_est">預估工時（小時）</label>
+              <input type="number" min="0" step="0.5" id="f_est" />
+            </div>
+            <div class="field">
+              <label for="f_act">實際工時（小時）</label>
+              <input type="number" min="0" step="0.5" id="f_act" />
+            </div>
+            <div class="field full">
+              <label for="f_note">備註</label>
+              <textarea id="f_note" rows="2" maxlength="300"></textarea>
+            </div>
+          </div>
+
+          <div id="errorBox" class="error-box hidden"></div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-ghost" id="btnClear">清除表單</button>
+            <button type="button" class="btn btn-ghost" id="btnQuote">計算報價</button>
+            <button type="submit" class="btn btn-primary" id="btnSubmit">新增工作</button>
+          </div>
+        </form>
+
+        <aside class="card quote-card" id="quoteCard">
+          <h3>報價結果</h3>
+          <div class="big">
+            <span>總報價</span>
+            <b id="q_total">NT$ 0</b>
+          </div>
+          <dl class="breakdown">
+            <div><dt>商品小計</dt><dd id="q_sub">NT$ 0</dd></div>
+            <div><dt>額外費用</dt><dd id="q_extra">NT$ 0</dd></div>
+            <div><dt>折扣</dt><dd id="q_discount">NT$ 0</dd></div>
+            <div><dt id="q_depLabel">應收訂金</dt><dd id="q_deposit">NT$ 0</dd></div>
+            <div><dt>已收款</dt><dd id="q_paid">NT$ 0</dd></div>
+            <div><dt>尚未收款</dt><dd id="q_balance">NT$ 0</dd></div>
+          </dl>
+          <div class="pay-row">
+            <span>付款狀態</span>
+            <span class="pill" id="q_pay">未收款</span>
+          </div>
+          <div class="hours">
+            <div><span>預估工時</span><b id="q_est">0 h</b></div>
+            <div><span>實際工時</span><b id="q_act">尚無</b></div>
+            <div><span>工時差異</span><b id="q_diff">—</b></div>
+            <div><span>平均時薪</span><b id="q_rate">—</b></div>
+          </div>
+          <p class="formula">總報價 ＝ 小計 ＋ 額外費用 − 折扣<br>平均時薪 ＝ 已收款 ÷ 實際工時</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ---------- calendar ---------- -->
+    <section id="view-calendar" class="view hidden">
+      <div class="card">
+        <div class="cal-head">
+          <div class="cal-nav">
+            <button class="btn-small" id="calPrev" aria-label="上個月">‹</button>
+            <button class="btn-small" id="calToday">今天</button>
+            <button class="btn-small" id="calNext" aria-label="下個月">›</button>
+          </div>
+          <h3 id="calTitle" class="cal-title"></h3>
+          <div class="legend-inline">
+            <span><i class="swatch" style="background:#E8453C"></i>2D</span>
+            <span><i class="swatch" style="background:#F28C28"></i>3D</span>
+            <span><i class="swatch" style="background:#F5B800"></i>Live2D</span>
+            <span><i class="swatch" style="background:#7CB342"></i>V 皮</span>
+          </div>
+        </div>
+        <div class="cal-grid" id="calWeekdays"></div>
+        <div class="cal-grid cal-days" id="calDays"></div>
+      </div>
+    </section>
+
+    <!-- ---------- list ---------- -->
+    <section id="view-list" class="view hidden">
+      <div class="card">
+        <div class="toolbar">
+          <input class="input" id="searchInput" type="search" placeholder="搜尋工作名稱或客戶代號" />
+          <select class="input" id="statusFilter" style="width:auto;flex:0 0 auto"></select>
+        </div>
+        <div class="toolbar">
+          <div class="chips">
+            <button class="chip active" data-cat="all">全部</button>
+            <button class="chip" data-cat="2d">2D</button>
+            <button class="chip" data-cat="3d">3D</button>
+            <button class="chip" data-cat="live2d">Live2D</button>
+            <button class="chip" data-cat="v">V 皮</button>
+          </div>
+          <span class="count" id="listCount"></span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>工作</th><th>類別</th><th>交件</th><th>狀態</th>
+                <th class="r">總報價</th><th class="r">未收款</th><th class="r">工時差異</th><th></th>
+              </tr>
+            </thead>
+            <tbody id="listBody"></tbody>
+          </table>
+        </div>
+        <div id="listEmpty" class="empty hidden"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
