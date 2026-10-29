@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>台北三味｜精選美食</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --ink: #2b2622;
+      --muted: #7a716a;
+      --line: #e8e2db;
+      --accent: #b5654a;
+      --sage: #7d8c76;
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Noto Sans TC", system-ui, sans-serif;
+      font-weight: 300;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.9;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3 {
+      font-family: "Noto Serif TC", serif;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ---------- Header / Nav ---------- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(250, 248, 245, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-family: "Noto Serif TC", serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.15em;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav a {
+      font-size: 0.92rem;
+      color: var(--muted);
+      padding-bottom: 4px;
+      border-bottom: 1px solid transparent;
+      transition: color .2s, border-color .2s;
+    }
+
+    nav a:hover { color: var(--ink); }
+
+    nav a.on {
+      color: var(--ink);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ---------- Pages ---------- */
+    .page { animation: fade .5s ease; }
+    
+
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ---------- Photos (linked to source) ---------- */
+    .photo {
+      position: relative;
+      display: block;
+      height: 100%;
+      min-height: 180px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #e9e4dd;
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .6s ease;
+    }
+
+    .photo:hover img { transform: scale(1.03); }
+
+    .photo .src {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      font-size: 0.72rem;
+      color: #fff;
+      background: rgba(0, 0, 0, .45);
+      padding: 3px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+    }
+
+
+    .photo .fallback {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      text-align: center;
+      font-size: 0.92rem;
+      color: var(--muted);
+      background: #ece6de;
+    }
+
+    .photo img { position: relative; z-index: 1; }
+
+    .photo.broken img { display: none; }
+
+    .photo .src { z-index: 2; }
+
+    /* ---------- Home ---------- */
+    .hero {
+      padding: 96px 0 72px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      padding-bottom: 96px;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform .3s, box-shadow .3s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(43, 38, 34, .08);
+    }
+
+    .card .card-img {
+      height: 200px;
+      border-radius: 0;
+      min-height: 0;
+    }
+
+    .card-body {
+      padding: 24px 24px 28px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--sage);
+      margin-bottom: 8px;
+    }
+
+    .card h3 { font-size: 1.2rem; margin-bottom: 10px; }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.93rem;
+      flex: 1;
+    }
+
+    .card .more {
+      margin-top: 18px;
+      font-size: 0.88rem;
+      color: var(--accent);
+    }
+
+
+    /* ---------- Hover background (home) ---------- */
+    #home { position: relative; }
+
+    .home-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .home-bg .bg-layer {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity .7s ease;
+    }
+
+    .home-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(250, 248, 245, .88), rgba(250, 248, 245, .94));
+    }
+
+    .bg-fruitful {
+      background-image: url("images/20251223130720-e2ab2dc2.jpg"),
+        url("https://supertaste-images.tvbs.com.tw/api/v1/legacy/img/program/upload/2025/12/23/20251223130720-e2ab2dc2.jpg?w=1440&q=75");
+    }
+    .bg-gugigi {
+      background-image: url("images/JAP_7941-4.jpg"),
+        url("https://tenjo.tw/wp-content/uploads/JAP_7941-4.jpg");
+    }
+    .bg-ototo {
+      background-image: url("images/e0d5f3f9-f898-4b6f-bb16-55dd6f4ec68b-w1600.jpg"),
+        url("https://v3-statics.mirrormedia.mg/images/e0d5f3f9-f898-4b6f-bb16-55dd6f4ec68b-w1600.jpg");
+    }
+
+    #home[data-bg="fruitful"] .bg-fruitful,
+    #home[data-bg="gugigi"] .bg-gugigi,
+    #home[data-bg="ototo"] .bg-ototo { opacity: 1; }
+
+    #home .wrap { position: relative; z-index: 1; }
+
+    /* ---------- Detail pages ---------- */
+    .detail-hero { padding: 72px 0 40px; }
+
+    .detail-hero .tag { margin-bottom: 14px; }
+
+    .detail-hero h1 {
+      font-size: clamp(2rem, 4.5vw, 2.9rem);
+      margin-bottom: 18px;
+    }
+
+    .lead {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 680px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 16px;
+      height: 480px;
+      margin-bottom: 64px;
+    }
+
+    .gallery .photo:first-child { grid-row: span 2; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 56px;
+      padding-bottom: 96px;
+      align-items: start;
+    }
+
+    .article h2 {
+      font-size: 1.5rem;
+      margin: 48px 0 16px;
+    }
+
+    .article h2:first-child { margin-top: 0; }
+
+    .article p {
+      margin-bottom: 18px;
+      color: #4a433d;
+    }
+
+    .article .photo {
+      margin: 36px 0;
+      height: auto;
+      aspect-ratio: 16 / 10;
+    }
+
+    .article .photo img { height: 100%; }
+
+    .dish-list {
+      margin: 24px 0;
+      display: grid;
+      gap: 14px;
+    }
+
+    .dish {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 22px;
+    }
+
+    .dish-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .dish-head strong { font-weight: 500; }
+
+    .dish-head em {
+      font-style: normal;
+      font-size: 0.88rem;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .dish p { font-size: 0.92rem; color: var(--muted); margin: 0; }
+
+    .info {
+      position: sticky;
+      top: 100px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px 26px;
+    }
+
+    .info h3 {
+      font-size: 1.05rem;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .info dl { display: grid; gap: 16px; }
+
+    .info dt {
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
+      color: var(--sage);
+    }
+
+    .info dd {
+      font-size: 0.92rem;
+      color: var(--ink);
+    }
+
+    .back {
+      display: inline-block;
+      margin: 0 0 40px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .back:hover { color: var(--accent); }
+
+    .note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 18px;
+    }
+
+    .source-links {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .source-links a {
+      color: var(--accent);
+      border-bottom: 1px solid transparent;
+    }
+
+    .source-links a:hover { border-bottom-color: var(--accent); }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 860px) {
+      .cards { grid-template-columns: 1fr; }
+      .layout { grid-template-columns: 1fr; gap: 40px; }
+      .info { position: static; }
+      .gallery { grid-template-columns: 1fr; grid-template-rows: auto; height: auto; }
+      .gallery .photo:first-child { grid-row: auto; }
+      .gallery .photo { height: 240px; }
+    }
+
+    @media (max-width: 560px) {
+      nav ul { gap: 16px; }
+      .hero { padding: 64px 0 48px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <a class="logo" href="index.html">台北<span>三味</span></a>
+    <nav>
+      <ul>
+        <li><a href="index.html" class="on">首頁</a></li>
+        <li><a href="fruitful.html">果然匯</a></li>
+        <li><a href="gugigi.html">古記雞</a></li>
+        <li><a href="ototo.html">一茶一瓦</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page active" id="home">
+    <div class="home-bg" aria-hidden="true"><div class="bg-layer bg-fruitful"></div><div class="bg-layer bg-gugigi"></div><div class="bg-layer bg-ototo"></div></div>
+    <div class="wrap">
+      <div class="hero">
+        <div class="eyebrow">THREE TASTES OF TAIPEI</div>
+        <h1>三種滋味，三種台北</h1>
+        <p>從蔬食百匯、居酒屋到老糧倉茶館，挑三家風格截然不同的餐廳，依你的心情選一間出門。</p>
+      </div>
+
+      <div class="cards">
+        <a class="card" href="fruitful.html" data-key="fruitful">
+          <div class="photo card-img">
+            <span class="fallback">果然匯台北新光站前店外觀</span><img src="images/20251223700858.jpg" data-remote="https://images.ctee.com.tw/newsphoto/2025-12-23/1024/20251223700858.jpg" alt="果然匯台北新光站前店外觀" onerror="if(this.dataset.remote&&this.src!==this.dataset.remote){this.src=this.dataset.remote}else{this.parentNode.classList.add('broken')}">
+            <span class="src">圖：饗賓集團</span>
+          </div>
+          <div class="card-body">
+            <div class="tag">蔬食 · 多國百匯 · 台北車站</div>
+            <h3>果然匯｜台北新光站前店</h3>
+            <p>超過兩百道料理無限取用，蔬食為主角，適合想吃得豐富又不想太負擔的家庭聚餐與朋友約飯。</p>
+            <div class="more">閱讀介紹 →</div>
+          </div>
+        </a>
+
+        <a class="card" href="gugigi.html" data-key="gugigi">
+          <div class="photo card-img">
+            <span class="fallback">古記雞私房菜居酒屋</span><img src="images/collage-2-7.jpg" data-remote="https://tenjo.tw/wp-content/uploads/collage-2-7.jpg" alt="古記雞私房菜居酒屋" onerror="if(this.dataset.remote&&this.src!==this.dataset.remote){this.src=this.dataset.remote}else{this.parentNode.classList.add('broken')}">
+            <span class="src">圖：周花花，甲飽沒</span>
+          </div>
+          <div class="card-body">
+            <div class="tag">居酒屋 · 私房菜 · 信義區</div>
+            <h3>古記雞私房菜居酒屋</h3>
+            <p>藏在信義區巷弄裡的人氣居酒屋，菜單道道在水準之上，座位多、有包廂，下班後小酌與聚會的首選。</p>
+            <div class="more">閱讀介紹 →</div>
+          </div>
+        </a>
+
+        <a class="card" href="ototo.html" data-key="ototo">
+          <div class="photo card-img">
+            <span class="fallback">一茶一瓦一號糧倉店</span><img src="images/e0d5f3f9-f898-4b6f-bb16-55dd6f4ec68b-w1600.jpg" data-remote="https://v3-statics.mirrormedia.mg/images/e0d5f3f9-f898-4b6f-bb16-55dd6f4ec68b-w1600.jpg" alt="一茶一瓦一號糧倉店" onerror="if(this.dataset.remote&&this.src!==this.dataset.remote){this.src=this.dataset.remote}else{this.parentNode.classList.add('broken')}">
+            <span class="src">圖：鏡週刊</span>
+          </div>
+          <div class="card-body">
+            <div class="tag">新中式茶館 · 老糧倉 · 松山區</div>
+            <h3>一茶一瓦｜一號糧倉店</h3>
+            <p>由 1944 年的統制糧倉改建而成，瓦罐煮奶茶與精品煮茶是招牌，午後想慢慢坐、拍照、聊天都很適合。</p>
+            <div class="more">閱讀介紹 →</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>台北三味｜內部測試版 · 資料整理自各店官網與媒體報導</footer>
+
+<script>
+  const homeSection = document.getElementById('home');
+  document.querySelectorAll('.card[data-key]').forEach(card => {
+    card.addEventListener('mouseenter', () => { homeSection.dataset.bg = card.dataset.key; });
+    card.addEventListener('mouseleave', () => { delete homeSection.dataset.bg; });
+  });
+</script>
+
+</body>
+</html>

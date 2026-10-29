@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>一茶一瓦｜一號糧倉店 · 台北三味</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@400;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --ink: #2b2622;
+      --muted: #7a716a;
+      --line: #e8e2db;
+      --accent: #b5654a;
+      --sage: #7d8c76;
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Noto Sans TC", system-ui, sans-serif;
+      font-weight: 300;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.9;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: "Noto Serif TC", serif;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ---------- Header / Nav ---------- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(250, 248, 245, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-family: "Noto Serif TC", serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.15em;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav a {
+      font-size: 0.92rem;
+      color: var(--muted);
+      padding-bottom: 4px;
+      border-bottom: 1px solid transparent;
+      transition: color .2s, border-color .2s;
+    }
+
+    nav a:hover {
+      color: var(--ink);
+    }
+
+    nav a.on {
+      color: var(--ink);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ---------- Pages ---------- */
+    .page {
+      animation: fade .5s ease;
+    }
+
+
+    @keyframes fade {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ---------- Photos (linked to source) ---------- */
+    .photo {
+      position: relative;
+      display: block;
+      height: 100%;
+      min-height: 180px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #e9e4dd;
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .6s ease;
+    }
+
+    .photo:hover img {
+      transform: scale(1.03);
+    }
+
+    .photo .src {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      font-size: 0.72rem;
+      color: #fff;
+      background: rgba(0, 0, 0, .45);
+      padding: 3px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+    }
+
+
+    .photo .fallback {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      text-align: center;
+      font-size: 0.92rem;
+      color: var(--muted);
+      background: #ece6de;
+    }
+
+    .photo img {
+      position: relative;
+      z-index: 1;
+    }
+
+    .photo.broken img {
+      display: none;
+    }
+
+    .photo .src {
+      z-index: 2;
+    }
+
+    /* ---------- Home ---------- */
+    .hero {
+      padding: 96px 0 72px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      padding-bottom: 96px;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform .3s, box-shadow .3s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(43, 38, 34, .08);
+    }
+
+    .card .card-img {
+      height: 200px;
+      border-radius: 0;
+      min-height: 0;
+    }
+
+    .card-body {
+      padding: 24px 24px 28px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--sage);
+      margin-bottom: 8px;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.93rem;
+      flex: 1;
+    }
+
+    .card .more {
+      margin-top: 18px;
+      font-size: 0.88rem;
+      color: var(--accent);
+    }
+
+    /* ---------- Detail pages ---------- */
+    .detail-hero {
+      padding: 72px 0 40px;
+    }
+
+    .detail-hero .tag {
+      margin-bottom: 14px;
+    }
+
+    .detail-hero h1 {
+      font-size: clamp(2rem, 4.5vw, 2.9rem);
+      margin-bottom: 18px;
+    }
+
+    .lead {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 680px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 16px;
+      height: 480px;
+      margin-bottom: 64px;
+    }
+
+    .gallery .photo:first-child {
+      grid-row: span 2;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 56px;
+      padding-bottom: 96px;
+      align-items: start;
+    }
+
+    .article h2 {
+      font-size: 1.5rem;
+      margin: 48px 0 16px;
+    }
+
+    .article h2:first-child {
+      margin-top: 0;
+    }
+
+    .article p {
+      margin-bottom: 18px;
+      color: #4a433d;
+    }
+
+    .article .photo {
+      margin: 36px 0;
+      height: auto;
+      aspect-ratio: 16 / 10;
+    }
+
+    .article .photo img {
+      height: 100%;
+    }
+
+    .dish-list {
+      margin: 24px 0;
+      display: grid;
+      gap: 14px;
+    }
+
+    .dish {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 22px;
+    }
+
+    .dish-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .dish-head strong {
+      font-weight: 500;
+    }
+
+    .dish-head em {
+      font-style: normal;
+      font-size: 0.88rem;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .dish p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .info {
+      position: sticky;
+      top: 100px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px 26px;
+    }
+
+    .info h3 {
+      font-size: 1.05rem;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .info dl {
+      display: grid;
+      gap: 16px;
+    }
+
+    .info dt {
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
+      color: var(--sage);
+    }
+
+    .info dd {
+      font-size: 0.92rem;
+      color: var(--ink);
+    }
+
+    .back {
+      display: inline-block;
+      margin: 0 0 40px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .back:hover {
+      color: var(--accent);
+    }
+
+    .note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 18px;
+    }
+
+    .source-links {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .source-links a {
+      color: var(--accent);
+      border-bottom: 1px solid transparent;
+    }
+
+    .source-links a:hover {
+      border-bottom-color: var(--accent);
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 860px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .info {
+        position: static;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        height: auto;
+      }
+
+      .gallery .photo:first-child {
+        grid-row: auto;
+      }
+
+      .gallery .photo {
+        height: 240px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      nav ul {
+        gap: 16px;
+      }
+
+      .hero {
+        padding: 64px 0 48px;
+      }
+    }
+
+    .dish-photo {
+      position: relative;
+      height: auto;
+      min-height: 0;
+      aspect-ratio: 16 / 9;
+      margin: 0 0 14px;
+      border-radius: 12px;
+    }
+
+    .article .dish .dish-photo {
+      margin: 0 0 14px;
+      aspect-ratio: 16 / 9;
+    }
+
+    .drink-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 14px;
+      margin: 28px 0 36px;
+    }
+
+    .drink-grid figure {
+      margin: 0;
+    }
+
+    .drink-grid .photo {
+      height: auto;
+      min-height: 0;
+      aspect-ratio: 4 / 3;
+      margin: 0;
+    }
+
+    .drink-grid figcaption {
+      margin-top: 8px;
+      font-size: 0.86rem;
+      color: var(--muted);
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="nav-inner">
+      <a class="logo" href="index.html">台北<span>三味</span></a>
+      <nav>
+        <ul>
+          <li><a href="index.html">首頁</a></li>
+          <li><a href="fruitful.html">果然匯</a></li>
+          <li><a href="gugigi.html">古記雞</a></li>
+          <li><a href="ototo.html" class="on">一茶一瓦</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page active" id="ototo">
+      <div class="wrap">
+        <div class="detail-hero">
+          <a class="back" href="index.html">← 返回首頁</a>
+          <div class="tag">新中式茶館 · 老糧倉 · 松山區</div>
+          <h1>一茶一瓦｜一號糧倉店</h1>
+          <p class="lead">把 1944 年的統制糧倉改造成新中式茶館，瓦罐煮茶、茶調酒與展演空間都在這裡。喝茶可以很講究，也可以很輕鬆。</p>
+        </div>
+
+        <div class="gallery">
+          <a class="photo" href="https://www.mirrormedia.mg/story/20250617food001" target="_blank" rel="noopener"><span
+              class="fallback">一茶一瓦 Draft 茶調酒</span><img src="images/e0d5f3f9-f898-4b6f-bb16-55dd6f4ec68b-w1600.jpg"
+              data-remote="https://v3-statics.mirrormedia.mg/images/e0d5f3f9-f898-4b6f-bb16-55dd6f4ec68b-w1600.jpg"
+              alt="一茶一瓦 Draft 茶調酒"
+              onerror="if(this.dataset.remote&&this.src!==this.dataset.remote){this.src=this.dataset.remote}else{this.parentNode.classList.add('broken')}"><span
+              class="src">來源：鏡週刊 ↗</span></a>
+          <a class="photo" href="https://www.mirrormedia.mg/story/20250617food001" target="_blank" rel="noopener"><span
+              class="fallback">櫻花紫薯包與蒔內卜肉</span><img src="images/a1ae4197-3377-473d-92e2-8b7b4b0dacea-w1600.jpg"
+              data-remote="https://v3-statics.mirrormedia.mg/images/a1ae4197-3377-473d-92e2-8b7b4b0dacea-w1600.jpg"
+              alt="櫻花紫薯包與蒔內卜肉"
+              onerror="if(this.dataset.remote&&this.src!==this.dataset.remote){this.src=this.dataset.remote}else{this.parentNode.classList.add('broken')}"><span
+              class="src">來源：鏡週刊 ↗</span></a>
+          <a class="photo" href="https://www.mirrormedia.mg/story/20250617food001" target="_blank" rel="noopener"><span
+              class="fallback">紅棗玫瑰瓦奶</span><img src="images/e3c47f55-1d15-49df-a327-28a516c19cfe-w1600.jpg"
+              data-remote="https://v3-statics.mirrormedia.mg/images/e3c47f55-1d15-49df-a327-28a516c19cfe-w1600.jpg"
+              alt="紅棗玫瑰瓦奶"
+              onerror="if(this.dataset.remote&&this.src!==this.dataset.remote){this.src=this.dataset.remote}else{this.parentNode.classList.add('broken')}"><span
+              class="src">來源：鏡週刊 ↗</span></a>
+        </div>
+
+        <div class="layout">
+          <article class="article">
+            <h2>老糧倉的新生</h2>
+            <p>這裡原本是日治末期建造的糧倉，建物本身有雙層牆與中空結構，用來隔絕濕氣與熱氣。由薇閣集團旗下的「一茶一瓦」進駐後，保留了老屋的質地，加入現代的茶館設計，讓歷史與現在在同一個空間裡對話。</p>
+            <p>一樓是茶吧與酒吧，二樓座位區可以仔細觀察日治時代留下來的糧倉結構。店內也會規劃展演與租借空間，平日來坐坐很舒服，假日人潮較多。</p>
+
+            <a class="photo" href="https://www.mirrormedia.mg/story/20250617food001" target="_blank" rel="noopener">
+              <span class="fallback">二樓座位區與糧倉結構</span><img src="images/0265f080-ad68-4e9d-a00c-f3db096dd189-w2400.jpg"
+                data-remote="https://v3-statics.mirrormedia.mg/images/0265f080-ad68-4e9d-a00c-f3db096dd189-w2400.jpg"
+                alt="二樓座位區與糧倉結構"
+                onerror="if(this.dataset.remote&&this.src!==this.dataset.remote){this.src=this.dataset.remote}else{this.parentNode.classList.add('broken')}">
+              <span class="src">來源：鏡週刊 ↗</span>
+            </a>
+
+            <h2>值得點的茶飲</h2>
+            <p>招牌是以唐朝瓦罐煮茶為靈感的瓦奶系列，喝的是一種慢慢熬出來的溫潤感。另外，講究茶葉本身的人，可以試試精品煮茶，茶葉來自台灣高山契作茶莊，用紫砂壺沖泡。</p>
+            <div class="dish-list">
+              <div class="dish">
+                <div class="dish-head"><strong>紅棗玫瑰瓦奶</strong><em>180 元／壺</em></div>
+                <p>紅玉紅茶加上黑糖、紅棗與大馬士革玫瑰，甜度不高，帶有淡淡花草香，整壺喝完不會膩。</p>
+              </div>
+              <div class="dish">
+                <div class="dish-head"><strong>梨山蜜香紅茶「一騎紅塵妃子笑」</strong><em>250 元／壺</em></div>
+                <p>來自梨山的蜜香紅茶，入口有蜜香，回甘明顯，適合搭配點心慢慢喝。</p>
+              </div>
+              <div class="dish">
+                <div class="dish-head"><strong>荷花酥</strong><em>125 元／份</em></div>
+                <p>包入綿密豆沙餡，外皮酥脆，和熱茶一起吃很對味。</p>
+              </div>
+            </div>
+
+            <a class="photo" href="https://www.mirrormedia.mg/story/20250617food001" target="_blank" rel="noopener">
+              <span class="fallback">梨山蜜香紅茶搭配荷花酥</span><img src="images/2949cd48-c674-4a45-bd54-b7208c5d443c-w2400.jpg"
+                data-remote="https://v3-statics.mirrormedia.mg/images/2949cd48-c674-4a45-bd54-b7208c5d443c-w2400.jpg"
+                alt="梨山蜜香紅茶搭配荷花酥"
+                onerror="if(this.dataset.remote&&this.src!==this.dataset.remote){this.src=this.dataset.remote}else{this.parentNode.classList.add('broken')}">
+              <span class="src">來源：鏡週刊 ↗</span>
+            </a>
+
+            <p>茶點方面，「櫻花紫薯包」（135 元／份）與台味炸物「蒔內卜肉」（175 元／份）也是人氣選擇，適合搭配熱茶或茶調酒一起點。</p>
+
+
+
+            <p>湯麵也能用茶入菜。「桂花紅茶清燉牛肉麵」使用手工雞蛋麵，再倒入一壺帶有花香的茶湯，清爽又獨特（255 元／碗），是跟一般牛肉麵不同的選擇。</p>
+            <div class="photo dish-photo"><span class="fallback">桂花紅茶清燉牛肉麵</span><img
+                src="images/e7004814-17a6-48ca-bb3a-0a7f2d511115-w1600.jpg"
+                data-remote="https://v3-statics.mirrormedia.mg/images/e7004814-17a6-48ca-bb3a-0a7f2d511115-w1600.jpg"
+                alt="桂花紅茶清燉牛肉麵"
+                onerror="if(this.dataset.remote&&this.src!==this.dataset.remote){this.src=this.dataset.remote}else{this.parentNode.classList.add('broken')}">
+            </div>
+            <h2>茶也能變成酒</h2>
+            <p>如果晚上想喝點酒，店裡採用 Draft 技術製作的茶調酒是另一個選擇。「龍攤NO戲」以奶香金萱加上龍舌蘭為基底，帶有刺蔥與鳳梨的果香（280
+              元／杯）；「甘梅當拎」以鐵觀音為主調，加入蘭姆酒與梅子，酸甜中帶著茶香（200 元／杯）。兩款都保留了茶香，適合不太想喝純酒的人。</p>
+            <p>不想喝酒的人也有選擇，「包種茶香片啤啤茶」以現萃濃茶結合啤酒花與氣泡，口感很像啤酒，卻完全沒有酒精（150 元／杯）。</p>
+          </article>
+
+          <aside class="info">
+            <h3>餐廳資訊</h3>
+            <dl>
+              <div>
+                <dt>地址</dt>
+                <dd>台北市松山區八德路二段 346 巷 3 弄 2 號</dd>
+              </div>
+              <div>
+                <dt>電話</dt>
+                <dd>02-2775-2777</dd>
+              </div>
+              <div>
+                <dt>營業時間</dt>
+                <dd>11:00 – 01:00</dd>
+              </div>
+              <div>
+                <dt>交通</dt>
+                <dd>捷運忠孝復興、南京復興站周邊步行可達</dd>
+              </div>
+              <div>
+                <dt>付款</dt>
+                <dd>可刷卡，收 1 成服務費</dd>
+              </div>
+              <div>
+                <dt>特色</dt>
+                <dd>瓦罐煮茶、精品煮茶、Draft 茶調酒、展演空間</dd>
+              </div>
+            </dl>
+            <p class="note">營業時間以店家最新公告為準。</p>
+          </aside>
+        </div>
+
+        <div class="source-links">
+          資料與圖片來源：
+          <a href="https://www.mirrormedia.mg/story/20250617food001" target="_blank"
+            rel="noopener">鏡週刊《喝茶也能很潮！百年糧倉蛻變茶酒館「一茶一瓦」》</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>台北三味｜內部測試版 · 資料整理自各店官網與媒體報導</footer>
+
+</body>
+
+</html>

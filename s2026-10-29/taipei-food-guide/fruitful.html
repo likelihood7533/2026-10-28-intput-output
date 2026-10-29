@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>果然匯｜台北新光站前店 · 台北三味</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --ink: #2b2622;
+      --muted: #7a716a;
+      --line: #e8e2db;
+      --accent: #b5654a;
+      --sage: #7d8c76;
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Noto Sans TC", system-ui, sans-serif;
+      font-weight: 300;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.9;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3 {
+      font-family: "Noto Serif TC", serif;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ---------- Header / Nav ---------- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(250, 248, 245, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-family: "Noto Serif TC", serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.15em;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav a {
+      font-size: 0.92rem;
+      color: var(--muted);
+      padding-bottom: 4px;
+      border-bottom: 1px solid transparent;
+      transition: color .2s, border-color .2s;
+    }
+
+    nav a:hover { color: var(--ink); }
+
+    nav a.on {
+      color: var(--ink);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ---------- Pages ---------- */
+    .page { animation: fade .5s ease; }
+    
+
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ---------- Photos (linked to source) ---------- */
+    .photo {
+      position: relative;
+      display: block;
+      height: 100%;
+      min-height: 180px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #e9e4dd;
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .6s ease;
+    }
+
+    .photo:hover img { transform: scale(1.03); }
+
+    .photo .src {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      font-size: 0.72rem;
+      color: #fff;
+      background: rgba(0, 0, 0, .45);
+      padding: 3px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+    }
+
+
+    .photo .fallback {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      text-align: center;
+      font-size: 0.92rem;
+      color: var(--muted);
+      background: #ece6de;
+    }
+
+    .photo img { position: relative; z-index: 1; }
+
+    .photo.broken img { display: none; }
+
+    .photo .src { z-index: 2; }
+
+    /* ---------- Home ---------- */
+    .hero {
+      padding: 96px 0 72px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      padding-bottom: 96px;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform .3s, box-shadow .3s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(43, 38, 34, .08);
+    }
+
+    .card .card-img {
+      height: 200px;
+      border-radius: 0;
+      min-height: 0;
+    }
+
+    .card-body {
+      padding: 24px 24px 28px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--sage);
+      margin-bottom: 8px;
+    }
+
+    .card h3 { font-size: 1.2rem; margin-bottom: 10px; }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.93rem;
+      flex: 1;
+    }
+
+    .card .more {
+      margin-top: 18px;
+      font-size: 0.88rem;
+      color: var(--accent);
+    }
+
+    /* ---------- Detail pages ---------- */
+    .detail-hero { padding: 72px 0 40px; }
+
+    .detail-hero .tag { margin-bottom: 14px; }
+
+    .detail-hero h1 {
+      font-size: clamp(2rem, 4.5vw, 2.9rem);
+      margin-bottom: 18px;
+    }
+
+    .lead {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 680px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 16px;
+      height: 480px;
+      margin-bottom: 64px;
+    }
+
+    .gallery .photo:first-child { grid-row: span 2; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 56px;
+      padding-bottom: 96px;
+      align-items: start;
+    }
+
+    .article h2 {
+      font-size: 1.5rem;
+      margin: 48px 0 16px;
+    }
+
+    .article h2:first-child { margin-top: 0; }
+
+    .article p {
+      margin-bottom: 18px;
+      color: #4a433d;
+    }
+
+    .article .photo {
+      margin: 36px 0;
+      height: auto;
+      aspect-ratio: 16 / 10;
+    }
+
+    .article .photo img { height: 100%; }
+
+    .dish-list {
+      margin: 24px 0;
+      display: grid;
+      gap: 14px;
+    }
+
+    .dish {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 22px;
+    }
+
+    .dish-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .dish-head strong { font-weight: 500; }
+
+    .dish-head em {
+      font-style: normal;
+      font-size: 0.88rem;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .dish p { font-size: 0.92rem; color: var(--muted); margin: 0; }
+
+    .info {
+      position: sticky;
+      top: 100px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px 26px;
+    }
+
+    .info h3 {
+      font-size: 1.05rem;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .info dl { display: grid; gap: 16px; }
+
+    .info dt {
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
+      color: var(--sage);
+    }
+
+    .info dd {
+      font-size: 0.92rem;
+      color: var(--ink);
+    }
+
+    .back {
+      display: inline-block;
+      margin: 0 0 40px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .back:hover { color: var(--accent); }
+
+    .note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 18px;
+    }
+
+    .source-links {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .source-links a {
+      color: var(--accent);
+      border-bottom: 1px solid transparent;
+    }
+
+    .source-links a:hover { border-bottom-color: var(--accent); }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 860px) {
+      .cards { grid-template-columns: 1fr; }
+      .layout { grid-template-columns: 1fr; gap: 40px; }
+      .info { position: static; }
+      .gallery { grid-template-columns: 1fr; grid-template-rows: auto; height: auto; }
+      .gallery .photo:first-child { grid-row: auto; }
+      .gallery .photo { height: 240px; }
+    }
+
+    @media (max-width: 560px) {
+      nav ul { gap: 16px; }
+      .hero { padding: 64px 0 48px; }
+    }
+  
+    .dish-photo {
+      position: relative;
+      height: auto;
+      min-height: 0;
+      aspect-ratio: 16 / 9;
+      margin: 0 0 14px;
+      border-radius: 12px;
+    }
+    .article .dish .dish-photo { margin: 0 0 14px; aspect-ratio: 16 / 9; }
+
+    .drink-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 14px;
+      margin: 28px 0 36px;
+    }
+    .drink-grid figure { margin: 0; }
+    .drink-grid .photo { height: auto; min-height: 0; aspect-ratio: 4 / 3; margin: 0; }
+    .drink-grid figcaption {
+      margin-top: 8px;
+      font-size: 0.86rem;
+      color: var(--muted);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <a class="logo" href="index.html">台北<span>三味</span></a>
+    <nav>
+      <ul>
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="fruitful.html" class="on">果然匯</a></li>
+        <li><a href="gugigi.html">古記雞</a></li>
+        <li><a href="ototo.html">一茶一瓦</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page active" id="fruitful">
+    <div class="wrap">
+      <div class="detail-hero">
+        <a class="back" href="index.html">← 返回首頁</a>
+        <div class="tag">蔬食 · 多國百匯 · 台北車站</div>
+        <h1>果然匯｜台北新光站前店</h1>
+        <p class="lead">以蔬果與自然食材為核心，把各國料理放進同一張餐桌。2025 年 12 月底於新光三越台北站前店 13 樓開幕，占地 260 坪、約 312 個座位，吃完一輪還能再回去挑下一盤。</p>
+      </div>
+
+      <div class="gallery">
+        <a class="photo" href="https://supertaste.tvbs.com.tw/food/357821" target="_blank" rel="noopener"><span class="fallback">果然匯自助吧，壽司、披薩、炸物等料理</span><img src="images/20251223130720-e2ab2dc2.jpg" data-remote="https://supertaste-images.tvbs.com.tw/api/v1/legacy/img/program/upload/2025/12/23/20251223130720-e2ab2dc2.jpg?w=1440&q=75" alt="果然匯自助吧，壽司、披薩、炸物等料理" onerror="if(this.dataset.remote&&this.src!==this.dataset.remote){this.src=this.dataset.remote}else{this.parentNode.classList.add('broken')}"><span class="src">來源：食尚玩家 ↗</span></a>
+        <a class="photo" href="https://supertaste.tvbs.com.tw/food/357821" target="_blank" rel="noopener"><span class="fallback">果然匯熱炒、烤物與炸物區</span><img src="images/20251223130713-f37d0d91.jpg" data-remote="https://supertaste-images.tvbs.com.tw/api/v1/legacy/img/program/upload/2025/12/23/20251223130713-f37d0d91.jpg?w=1440&q=75" alt="果然匯熱炒、烤物與炸物區" onerror="if(this.dataset.remote&&this.src!==this.dataset.remote){this.src=this.dataset.remote}else{this.parentNode.classList.add('broken')}"><span class="src">來源：食尚玩家 ↗</span></a>
+        <a class="photo" href="https://supertaste.tvbs.com.tw/food/357821" target="_blank" rel="noopener"><span class="fallback">果然匯甜點區，蛋糕與巧克力</span><img src="images/20251223130715-8183ffa0.jpg" data-remote="https://supertaste-images.tvbs.com.tw/api/v1/legacy/img/program/upload/2025/12/23/20251223130715-8183ffa0.jpg?w=1440&q=75" alt="果然匯甜點區，蛋糕與巧克力" onerror="if(this.dataset.remote&&this.src!==this.dataset.remote){this.src=this.dataset.remote}else{this.parentNode.classList.add('broken')}"><span class="src">來源：食尚玩家 ↗</span></a>
+      </div>
+
+      <div class="layout">
+        <article class="article">
+          <h2>為什麼值得來</h2>
+          <p>果然匯是饗賓集團旗下的蔬食百匯品牌，理念是讓蔬食也能吃得滿足、吃得開心。新光站前店的料理種類非常多，熱炒、烤物、炸物、甜點與各國風味都在同一個空間裡，超過兩百道料理可以自由取用。</p>
+          <p>對不吃肉、或想在聚餐時照顧不同飲食習慣的朋友來說，百匯的形式特別實用。每個人想吃什麼就拿什麼，不用為了同一道菜大家一起等。</p>
+
+          <h2>開幕限定的幾道</h2>
+          <p>站前店推出 7 道開幕限定料理，多數於平日午晚餐供應，部分甜點則在假日下午餐提供。菜色會依時段與季節調整，實際供應以店家公告為準。</p>
+          <div class="dish-list">
+            <div class="dish">
+              <div class="dish-head"><strong>金桔剝皮椒香櫛瓜麵</strong><em>開幕限定</em></div>
+              <p>櫛瓜細刨成麵，搭配微辣的剝皮辣椒與金桔醬，清爽不負擔。</p>
+            </div>
+            <div class="dish">
+              <div class="dish-head"><strong>旬蔬豆乳鍋</strong><em>開幕限定</em></div>
+              <p>以豆乳與當令時蔬熬煮湯頭，適合冬天暖胃。</p>
+            </div>
+            <div class="dish">
+              <div class="photo dish-photo"><span class="fallback">甜柿乳酪捲</span><img src="images/20251223700865.jpg" data-remote="https://images.ctee.com.tw/newsphoto/2025-12-23/1024/20251223700865.jpg" alt="甜柿乳酪捲" onerror="if(this.dataset.remote&&this.src!==this.dataset.remote){this.src=this.dataset.remote}else{this.parentNode.classList.add('broken')}"></div>
+              <div class="dish-head"><strong>甜柿乳酪捲</strong><em>假日下午餐</em></div>
+              <p>新竹在地甜柿搭配綿密奶酪，甜度適中，是餐後的收尾好選擇。</p>
+            </div>
+          </div>
+
+          <h2>用餐前的小提醒</h2>
+          <p>用餐時段人潮較多，假日尤其明顯，建議提前線上訂位。2026 年起價格有調整，平日午餐與晚餐為 638 元、假日午晚餐為 718 元，假日下午餐為 638 元，以上皆需另加 10% 服務費。停車方面，消費滿一定金額可兌換免費停車時數，規則以百貨現場公告為準。</p>
+        </article>
+
+        <aside class="info">
+          <h3>餐廳資訊</h3>
+          <dl>
+            <div><dt>地址</dt><dd>台北市中正區忠孝西路一段 66 號 13 樓（新光三越台北站前店）</dd></div>
+            <div><dt>電話</dt><dd>02-2388-0101</dd></div>
+            <div><dt>交通</dt><dd>捷運／火車／高鐵台北車站 Z 區地下街 Z4 出口，步行約 1 分鐘</dd></div>
+            <div><dt>價格</dt><dd>平日午晚餐 638 元；假日午晚餐 718 元；假日下午餐 638 元（另加 10%）</dd></div>
+            <div><dt>兒童收費</dt><dd>未滿 3 歲免費；3 至未滿 6 歲 150 元；6 至未滿 12 歲半價；12 歲以上以成人計</dd></div>
+            <div><dt>停車</dt><dd>消費滿 500 元可兌換 30 分鐘免費停車，最多 4 小時</dd></div>
+          </dl>
+          <p class="note">價格與規則以官網與現場公告為準。</p>
+        </aside>
+      </div>
+
+      <div class="source-links">
+        資料與圖片來源：
+        <a href="https://www.fruitfulfood.com.tw/zh-TW/store/TaipeiStation" target="_blank" rel="noopener">果然匯官網</a>、
+        <a href="https://www.ctee.com.tw/news/20251223700856-430901" target="_blank" rel="noopener">工商時報開幕報導</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>台北三味｜內部測試版 · 資料整理自各店官網與媒體報導</footer>
+
+</body>
+</html>
